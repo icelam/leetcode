@@ -18,11 +18,16 @@ class MyLinkedList {
   }
 
   public int get(int index) {
-    if (index > this.length - 1) {
+    if (index >= this.length) {
       return -1;
     }
-    
+
+    if (index == this.length - 1) {
+      return this.tail.val;
+    }
+
     ListNode target = head;
+
     for (int i = 0; i < index; i++) {
       target = target.next;
     }
@@ -97,13 +102,3 @@ class MyLinkedList {
     this.length--;
   }
 }
-
-/**
- * Your MyLinkedList object will be instantiated and called as such:
- * MyLinkedList obj = new MyLinkedList();
- * int param_1 = obj.get(index);
- * obj.addAtHead(val);
- * obj.addAtTail(val);
- * obj.addAtIndex(index,val);
- * obj.deleteAtIndex(index);
- */
