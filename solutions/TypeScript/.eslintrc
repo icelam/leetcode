@@ -21,6 +21,7 @@
     "no-continue": ["off"],
     "no-bitwise": ["off"],
     "no-cond-assign": ["off"],
-    "no-use-before-define": ["warn"]
+    "no-use-before-define": ["warn"],
+    "function-paren-newline": ["off"]
   }
 }
