@@ -1,11 +1,11 @@
 function quickSort(arr: number[]) {
-  function swap(items: number [], leftIndex: number, rightIndex: number) {
+  function swap(items: number[], leftIndex: number, rightIndex: number) {
     const temp = items[leftIndex];
     items[leftIndex] = items[rightIndex];
     items[rightIndex] = temp;
   }
 
-  function partition(items: number [], left: number, right: number) {
+  function partition(items: number[], left: number, right: number) {
     const pivot = items[Math.floor((right + left) / 2)];
     let i = left;
     let j = right;
@@ -26,7 +26,7 @@ function quickSort(arr: number[]) {
     return i;
   }
 
-  function sort(items: number [], left: number, right: number) {
+  function sort(items: number[], left: number, right: number) {
     let index: number;
 
     if (items.length > 1) {
