@@ -3,8 +3,11 @@ function isHappy(n: number): boolean {
   let squaresSum = n;
 
   while (squaresSum !== 1) {
-    const nums = String(squaresSum).split('');
-    squaresSum = nums.reduce((i, num) => (Math.pow(Number(num), 2) + i), 0);
+    let temp = 0;
+    for (let i = squaresSum; i > 0; i = Math.floor(i / 10)) {
+      temp += Math.pow(i % 10, 2);
+    }
+    squaresSum = temp;
 
     if (hashMap[squaresSum]) {
       return false;
