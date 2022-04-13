@@ -38,7 +38,7 @@ class Solution {
         boundaries[3]++;
       }
 
-       direction++;
+      direction++;
     }
 
     return result;
