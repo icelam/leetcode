@@ -4,8 +4,10 @@ function sortedSquares(nums: number[]): number[] {
   }
 
   // insertion sort
-  let i; let key; let
-    j;
+  let i;
+  let key;
+  let j;
+
   for (i = 1; i < nums.length; i++) {
     key = nums[i];
     j = i - 1;
