@@ -1,4 +1,14 @@
 function bitwiseComplement(n: number): number {
-  const binaryBits = n.toString(2).split('');
-  return parseInt(binaryBits.map((bit) => (bit === '0' ? '1' : '0')).join(''), 2);
+  if (n === 0) {
+    return 1;
+  }
+
+  let num = n;
+  const bitLength = Math.floor(Math.log(num) / Math.log(2)) + 1;
+
+  for (let i = 0; i < bitLength; i++) {
+    num ^= 1 << i;
+  }
+
+  return num;
 }
