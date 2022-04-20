@@ -12,7 +12,7 @@ function convertToTitle(columnNumber: number): string {
       result = toColumnChar(26) + result;
       remain = Math.floor(remain / 26) - 1;
     } else {
-      result = toColumnChar(Math.floor(remain % 26)) + result;
+      result = toColumnChar(remain % 26) + result;
       remain = Math.floor(remain / 26);
     }
   }
