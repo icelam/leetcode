@@ -1,9 +1,16 @@
-function rotate(nums: number[], k: number): void {
-  for (let i = 0; i < k % nums.length; i++) {
-    const lastItem = nums[nums.length - 1];
-    for (let j = nums.length - 2; j >= 0; j--) {
-      nums[j + 1] = nums[j];
-    }
-    nums[0] = lastItem;
+function reverseSubArray(nums: number[], start: number, end: number) {
+  while (start <= end) {
+    const temp = nums[start];
+    nums[start] = nums[end];
+    nums[end] = temp;
+    start++;
+    end--;
   }
+}
+
+function rotate(nums: number[], k: number): void {
+  const numberOfShift = k % nums.length;
+  reverseSubArray(nums, 0, nums.length - 1);
+  reverseSubArray(nums, 0, numberOfShift - 1);
+  reverseSubArray(nums, numberOfShift, nums.length - 1);
 }
