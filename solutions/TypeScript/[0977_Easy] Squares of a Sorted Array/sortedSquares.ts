@@ -1,23 +1,17 @@
 function sortedSquares(nums: number[]): number[] {
-  for (let i = 0; i < nums.length; i++) {
-    nums[i] = Math.pow(nums[i], 2);
-  }
+  let i = 0;
+  let j = nums.length - 1;
+  const result: number[] = [];
 
-  // insertion sort
-  let i;
-  let key;
-  let j;
-
-  for (i = 1; i < nums.length; i++) {
-    key = nums[i];
-    j = i - 1;
-
-    while (j >= 0 && nums[j] > key) {
-      nums[j + 1] = nums[j];
-      j -= 1;
+  for (let k = nums.length - 1; k >= 0; k--) {
+    if (Math.abs(nums[i]) >= Math.abs(nums[j])) {
+      result[k] = Math.pow(nums[i], 2);
+      i++;
+    } else {
+      result[k] = Math.pow(nums[j], 2);
+      j--;
     }
-    nums[j + 1] = key;
   }
 
-  return nums;
+  return result;
 }
