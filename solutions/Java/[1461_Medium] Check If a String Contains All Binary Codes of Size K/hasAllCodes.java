@@ -1,10 +1,14 @@
 class Solution {
+  public int calculateBitsRequired(int k) {
+    return (1 << k) - 1 + k;
+  }
+
   public boolean isValidStringLength(String s, int k) {
-    return s.length() >= Math.pow(2, k) - 1 + k;
+    return s.length() >= calculateBitsRequired(k);
   }
 
   public boolean isSetComplete(HashSet<String> set, int k) {
-    return set.size() == Math.pow(2, k);
+    return set.size() == (1 << k);
   }
 
   public boolean hasAllCodes(String s, int k) {
@@ -12,14 +16,19 @@ class Solution {
       return false;
     }
 
+    int minBitsRequired = calculateBitsRequired(k);
     HashSet<String> set = new HashSet<>();
 
-    char[] c = s.toCharArray();
+    for (int start = 0, end = k; end <= s.length(); start++, end++) {
+      set.add(s.substring(start, end));
 
-    for (int i = k; i <= s.length() && !(isSetComplete(set, k)); i++) {
-      set.add(s.substring(i - k, i));
+      int remainingBits = s.length() - end;
+      int bitsInSet = set.size() * k;
+      if (remainingBits < minBitsRequired - bitsInSet || isSetComplete(set, k)) {
+        break;
+      }
     }
 
-    return set.size() == Math.pow(2, k);
+    return isSetComplete(set, k);
   }
 }
