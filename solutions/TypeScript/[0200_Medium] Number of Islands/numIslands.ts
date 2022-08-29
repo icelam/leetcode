@@ -1,63 +1,40 @@
-type Tile = number | undefined;
+function numIslands(grid: string[][]): number {
+  const height = grid.length;
+  const width = grid[0].length;
 
-function numIslands(map: string[][]): number {
-  // handle edge case - empty map
-  if (!map.length) {
-    return 0;
-  }
+  const isValidPosition = (
+    y: number,
+    x: number
+  ): boolean => (
+    y >= 0 && y < height && x >= 0 && x < width
+  );
 
-  const mapProperties = {
-    width: map.length > 0 ? map[0].length : 0,
-    height: map.length
+  const visitIsland = (
+    y: number,
+    x: number
+  ): void => {
+    if (!isValidPosition(y, x) || grid[y][x] === '0') {
+      return;
+    }
+
+    grid[y][x] = '0';
+
+    visitIsland(y + 1, x);
+    visitIsland(y - 1, x);
+    visitIsland(y, x + 1);
+    visitIsland(y, x - 1);
   };
 
-  // store the tile id and it's island index
-  const tileHashmap: Record<string, number> = {};
+  let result = 0;
 
-  let helperCounter = 0;
-
-  // Loop through tiles
-  for (let y = 0; y < mapProperties.height; y++) {
-    for (let x = 0; x < mapProperties.width; x++) {
-      const currentTile = map[y][x];
-
-      if (currentTile === '1') { // if current tile is land (land === 1)
-        const tileId = `${y},${x}`;
-
-        const upperTile: Tile = parseInt(map[y - 1]?.[x], 10);
-        const leftTile: Tile = parseInt(map[y]?.[x - 1], 10);
-
-        // if up and left tile is empty, then it
-        // have a chance that this is a new island
-        if (!upperTile && !leftTile) {
-          helperCounter++;
-          tileHashmap[tileId] = helperCounter;
-        } else {
-          const upperTileIslandIndex = tileHashmap[`${y - 1},${x}`];
-          const leftTileIslandIndex = tileHashmap[`${y},${x - 1}`];
-
-          if (upperTile && leftTile) {
-            // if both up and left tile is land (island)
-            // and the current tile is a joint tile of both land
-            // perform a merge on lands (island)
-            if (upperTileIslandIndex !== leftTileIslandIndex) {
-              for (const searchingTileId in tileHashmap) {
-                if (tileHashmap[searchingTileId] === leftTileIslandIndex) {
-                  tileHashmap[searchingTileId] = upperTileIslandIndex;
-                }
-              }
-            }
-            tileHashmap[tileId] = upperTileIslandIndex;
-          } else if (upperTile) { // this tile is connected with the upper tile
-            tileHashmap[tileId] = upperTileIslandIndex;
-          } else if (leftTile) { // this tile connects with the left tile
-            tileHashmap[tileId] = leftTileIslandIndex;
-          }
-        }
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      if (grid[y][x] === '1') {
+        result++;
+        visitIsland(y, x);
       }
     }
   }
 
-  // Return the result
-  return new Set(Object.values(tileHashmap)).size;
+  return result;
 }
