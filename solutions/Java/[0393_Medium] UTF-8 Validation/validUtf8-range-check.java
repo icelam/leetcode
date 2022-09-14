@@ -14,8 +14,6 @@ class Solution {
         numberOfLeadingOnes = 3;
       } else if (data[index] >= 0b11000000 && data[index] <= 0b11011111) {
         numberOfLeadingOnes = 2;
-      } else if (data[index] >= 0b10000000 && data[index] <= 0b10111111) {
-        return false;
       } else {
         return false;
       }
