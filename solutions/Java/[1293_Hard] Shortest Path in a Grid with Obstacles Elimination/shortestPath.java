@@ -37,7 +37,7 @@ class Solution {
     int min = Integer.MAX_VALUE;
 
     for (int[] d: directions) {
-       min = Math.min(min, dfs(grid, m, n, k, visited, row + d[0], column  + d[1], dp));
+      min = Math.min(min, dfs(grid, m, n, k, visited, row + d[0], column + d[1], dp));
     }
 
     visited[row][column] = false;
