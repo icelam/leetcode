@@ -1,17 +1,18 @@
 function detectCapitalUse(word: string): boolean {
-  let isAllCapital = true;
-  let isAllLowerCaseAfterFirstLetter = true;
+  const isCapitalLetter = (c: string) => (c.charCodeAt(0) >= 65 && c.charCodeAt(0) <= 90);
 
-  for (let i = 0; i < word.length; i++) {
-    if (!isAllCapital && !isAllLowerCaseAfterFirstLetter) {
-      break;
+  let numberOfCapitalLetter = 0;
+  const wordLength = word.length;
+
+  for (let i = 0; i < wordLength; i++) {
+    if (isCapitalLetter(word[i])) {
+      numberOfCapitalLetter++;
     }
-
-    isAllCapital = isAllCapital && (word.charCodeAt(i) >= 65 && word.charCodeAt(i) <= 90);
-    isAllLowerCaseAfterFirstLetter = i === 0
-      ? true
-      : isAllLowerCaseAfterFirstLetter && (word.charCodeAt(i) >= 97 && word.charCodeAt(i) <= 122);
   }
 
-  return isAllCapital || isAllLowerCaseAfterFirstLetter;
+  return (
+    (isCapitalLetter(word[0]) && numberOfCapitalLetter === 1)
+    || numberOfCapitalLetter === wordLength
+    || numberOfCapitalLetter === 0
+  );
 }
