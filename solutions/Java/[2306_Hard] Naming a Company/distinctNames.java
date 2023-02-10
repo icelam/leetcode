@@ -81,12 +81,6 @@ class Solution {
       startCount[idea.charAt(0) - 'a']++;
     }
 
-    for (int c1 = 0; c1 < 26; ++c1) {
-      for (int c2 = 0; c2 < 26; ++c2) {
-        dp[c1][c2] = startCount[c1];
-      }
-    }
-
     for (String idea : ideas) {
       TrieNode suffixNode = trie.getSuffix(idea);
       char c1 = idea.charAt(0);
@@ -94,21 +88,16 @@ class Solution {
       for (char c2 = 'a'; c2 <= 'z'; c2++) {
         TrieNode prefixNode = suffixNode.getNode(c2);
 
-        if (prefixNode != null && prefixNode.isStart()) {
-          dp[c1 - 'a'][c2 - 'a']--;
-        }
-      }
-    }
-
-    for (String idea : ideas) {
-      TrieNode suffixNode = trie.getSuffix(idea);
-      char c1 = idea.charAt(0);
-
-      for (char c2 = 'a'; c2 <= 'z'; c2++) {
-        TrieNode prefixNode = suffixNode.getNode(c2);
-
+        // If a + b is valid, then b + a is also valid
+        // So if any b + a is valid, get count of a + b * 2 will be the result
+        // e.g. ["coffee","donuts","time","toffee"]
+        // 1. donuts + coffee -> result += 1 * 2, as we add 1 to dp['c']['d'] when checking idea "coffee" with replaced preifx 'd'
+        // 2. time + donuts -> result += 1 * 2, as we add 1 to dp['d']['t'] when checking idea "donuts" with replaced preifx 't
+        // 3. toffee + donuts -> result += 1 * 2, dp['d']['t'] has been seen before in step 2, it remains at 1, so we will also add result += 1 * 2
+        // Final result = 6
         if (prefixNode == null || !prefixNode.isStart()) {
-          result += dp[c2 - 'a'][c1 - 'a'];
+          dp[c1 - 'a'][c2 - 'a']++;
+          result += dp[c2 - 'a'][c1 - 'a'] * 2;
         }
       }
     }
@@ -116,4 +105,3 @@ class Solution {
     return result;
   }
 }
-
