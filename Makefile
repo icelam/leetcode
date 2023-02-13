@@ -28,7 +28,7 @@ new-readme-entry:
 	[problem_id, problem_name] = re.search(r"\[(\d+)_.*\]\s(.*)", raw_input).groups(); \
 	level=raw_input.split("]")[0].split("_")[1]; \
 	encoded_path=urllib.parse.quote(raw_input); \
-	readme_entry=f"| {problem_id}. {problem_name} | {level} | [✓]({encoded_path}) |  |  |  |"; \
+	readme_entry=f"| {int(problem_id)}. {problem_name} | {level} | [✓]({encoded_path}) |  |  |  |"; \
 	print(f"Entry generated:\n{readme_entry if readme_entry else None}"); \
 	subprocess.run("pbcopy", text=True, input=readme_entry) if readme_entry else print("Path with given ID not found")' <<< "${FILE_PATH}"
 
