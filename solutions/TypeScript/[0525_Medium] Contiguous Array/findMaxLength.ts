@@ -1,6 +1,5 @@
 function findMaxLength(nums: number[]): number {
   let prefixSum = 0;
-  const previousStopIndex = 0;
   let maxLength = 0;
   const hashTable: Record<number, number> = {};
 
