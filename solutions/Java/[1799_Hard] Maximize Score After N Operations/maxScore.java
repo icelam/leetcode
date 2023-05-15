@@ -21,7 +21,7 @@ class Solution {
     * transfer this newState to the next recursion to avoid backtracking selection.
     *
     * Assuming that the number of array elements is n, when all elements are selected,
-    * state = (1 << n)-1
+    * state = (1 << n) - 1
     *
     * Since all the selections of the selected two elements must be considered every time, the state
     * will change from 0 to the final state in different processes, and we record the scores
