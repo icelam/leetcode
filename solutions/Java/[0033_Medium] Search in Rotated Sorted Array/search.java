@@ -1,5 +1,5 @@
 class Solution {
-  private int findPrivot(int[] arr) {
+  private int findPivot(int[] arr) {
     int left = 0;
     int right = arr.length - 1;
     int rightMostNum = arr[right];
@@ -36,9 +36,9 @@ class Solution {
 
   public int search(int[] nums, int target) {
     int n = nums.length;
-    int privotIndex = findPrivot(nums);
-    int left = target > nums[n - 1] ? 0 : privotIndex;
-    int right = target > nums[n - 1] ? privotIndex - 1 : n - 1;
+    int pivotIndex = findPivot(nums);
+    int left = target > nums[n - 1] ? 0 : pivotIndex;
+    int right = target > nums[n - 1] ? pivotIndex - 1 : n - 1;
     return binarySearch(nums, target, left, right);
   }
 }
