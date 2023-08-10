@@ -1,25 +1,41 @@
 class Solution {
-  public int findPivot(int[] arr) {
-    for (int i = 1; i < arr.length; i++) {
-      if (arr[i] < arr[i - 1]) {
-        return i;
+  private int findPivot (int[] arr) {
+    int left = 0;
+    int right = arr.length - 1;
+
+    while (left < right && arr[0] == arr[right]) {
+      right--;
+    }
+
+    while (left <= right) {
+      int middle = left + (right - left) / 2;
+      if (arr[middle] >= arr[0]) {
+        left = middle + 1;
+      } else {
+        right = middle - 1;
       }
     }
-    return 0;
+
+    // Not rotated
+    if (left == arr.length) {
+      return 0;
+    }
+
+    return left;
   }
 
-  public boolean binarySearch(int[] nums, int left, int right, int target) {
+  private boolean binarySearch(int[] arr, int target, int left, int right) {
     while (left <= right) {
-      int middle = (left + right) / 2;
+      int middle = left + (right - left) / 2;
 
-      if (target == nums[middle]) {
+      if (arr[middle] == target) {
         return true;
       }
 
-      if (target < nums[middle]) {
-        right = middle - 1;
-      } else {
+      if (arr[middle] < target) {
         left = middle + 1;
+      } else {
+        right = middle - 1;
       }
     }
 
@@ -27,11 +43,11 @@ class Solution {
   }
 
   public boolean search(int[] nums, int target) {
-    int pivot = findPivot(nums);
+    int n = nums.length;
+    int pivotIndex = findPivot(nums);
+    int left = target > nums[n - 1] ? 0 : pivotIndex;
+    int right = target > nums[n - 1] ? pivotIndex - 1 : n - 1;
 
-    boolean result1 = binarySearch(nums, 0, pivot - 1, target);
-    boolean result2 = binarySearch(nums, pivot, nums.length - 1, target);
-
-    return result1 || result2;
+    return binarySearch(nums, target, left, right);
   }
 }
