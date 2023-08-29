@@ -5,12 +5,6 @@ class Solution {
     dp[0][0] = true;
 
     for (int i = 1; i < n; i++) {
-      if (stones[i] - stones[i - 1] > i) {
-        return false;
-      }
-    }
-
-    for (int i = 1; i < n; i++) {
       // Try all previois stone
       for (int j = i - 1; j >= 0; j--) {
         // last jump distance
