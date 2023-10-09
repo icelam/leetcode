@@ -1,35 +1,38 @@
 class Solution {
-  public int searchIndex(int[] nums, int left, int right, int target, String mode) {
-    while (left <= right) {
-      int middle = (left + right) / 2;
+  public int findBoundary(int[] arr, int target, int left, int right, boolean searchLeft) {
+    int index = -1;
 
-      boolean isBoundary = mode.equals("start")
-        ? middle == 0 || nums[middle - 1] != target
-        : middle == nums.length - 1 || nums[middle + 1] != target;
+    while (left <= right){
+      int middle = left + (right - left) / 2;
 
-      if (target == nums[middle] && isBoundary) {
-        return middle;
-      }
+      if (arr[middle] == target) {
+        index = middle;
 
-      boolean shouldSearchTowardsLeft = mode.equals("start")
-        ? target <= nums[middle]
-        : target < nums[middle];
-
-      if (shouldSearchTowardsLeft) {
+        if (searchLeft) {
+          right = middle - 1;
+        } else {
+          left = middle + 1;
+        }
+      } else if (arr[middle] > target) {
         right = middle - 1;
       } else {
         left = middle + 1;
       }
     }
 
-    return -1;
+    return index;
   }
 
   public int[] searchRange(int[] nums, int target) {
-    int startIndex = searchIndex(nums, 0, nums.length - 1, target, "start");
-    int endIndex = startIndex > -1
-      ? searchIndex(nums, startIndex, nums.length - 1, target, "end")
-      : -1;
-    return new int[] {startIndex, endIndex};
+    int n = nums.length;
+    int left = findBoundary(nums, target, 0, n - 1, true);
+
+    if (left == -1) {
+      return new int[]{-1, -1};
+    }
+
+    int right = findBoundary(nums, target, left, n - 1, false);
+
+    return new int[]{left, right};
   }
 }
