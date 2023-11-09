@@ -15,11 +15,13 @@ class Solution {
     for (int i = 0; i < n; i++) {
       if (i > 0 && characters[i] != characters[i - 1]) {
         result += arithmeticSum(i - start);
+        result %= MOD;
         start = i;
       }
     }
 
     result += arithmeticSum(n - start);
+    result %= MOD;
     return result;
   }
 }
