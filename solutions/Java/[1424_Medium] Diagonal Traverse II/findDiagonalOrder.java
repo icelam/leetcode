@@ -11,25 +11,25 @@ class Solution {
     }
 
     int diagonalCount = height + width - 1;
-    LinkedList<Integer>[] reorderedNums = new LinkedList[diagonalCount];
+    ArrayList<Integer>[] reorderedNums = new ArrayList[diagonalCount];
 
     for (int i = 0; i < diagonalCount; i++) {
-      reorderedNums[i] = new LinkedList<Integer>();
+      reorderedNums[i] = new ArrayList<Integer>();
     }
 
-    for (int row = 0; row < height; row++) {
+    for (int row = height - 1; row >= 0; row--) {
       List<Integer> rowList = nums.get(row);
       int rowSize = rowList.size();
 
       for (int column = 0; column < rowSize; column++) {
-        reorderedNums[column + row].addFirst(rowList.get(column));
+        reorderedNums[column + row].add(rowList.get(column));
       }
     }
 
     int[] result = new int[n];
     int pointer = 0;
 
-    for (LinkedList<Integer> batch: reorderedNums) {
+    for (List<Integer> batch: reorderedNums) {
       for (int value: batch) {
         result[pointer] = value;
         pointer++;
