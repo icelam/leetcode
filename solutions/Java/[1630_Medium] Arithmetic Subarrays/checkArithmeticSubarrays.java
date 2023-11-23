@@ -1,61 +1,31 @@
 class Solution {
-  public int[] copySubArray(int[] arr, int left, int right) {
-    int size = right - left + 1;
-    int[] temp = new int[size];
-
-    for (int i = 0; i < size; i++) {
-      temp[i] = arr[left + i];
-    }
-
-    return temp;
-  }
-
-  private int partition(int[] arr, int low, int high) {
-    int pivot = arr[high];
-    int i = (low - 1);
-
-    for (int j = low; j < high; j++) {
-      if (arr[j] < pivot) {
-        i++;
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-      }
-    }
-
-    int temp = arr[i + 1];
-    arr[i + 1] = arr[high];
-    arr[high] = temp;
-    return (i + 1);
-  }
-
-  private void quickSort(int[] arr, int low, int high) {
-    if (low < high) {
-      int center = partition(arr, low, high);
-
-      quickSort(arr, low, center - 1);
-      quickSort(arr, center + 1, high);
-    }
-  }
-
   public List<Boolean> checkArithmeticSubarrays(int[] nums, int[] l, int[] r) {
+    int m = l.length;
     List<Boolean> result = new ArrayList<>();
 
-    for (int i = 0; i < l.length; i++) {
-      int[] temp = copySubArray(nums, l[i], r[i]);
-      quickSort(temp, 0, temp.length - 1);
+    for (int i = 0; i < m; i++) {
+      int left = l[i];
+      int right = r[i];
+      int size = (right - left) + 1;
+      int[] tempArr = new int[size];
 
-      int difference = temp[1] - temp[0];
-      boolean isArithmeticSequence = true;
+      for (int j = 0; j < size; j++) {
+        tempArr[j] = nums[left + j];
+      }
 
-      for (int j = 2; j < temp.length; j++) {
-        if (temp[j] - temp[j - 1] != difference) {
-          isArithmeticSequence = false;
+      Arrays.sort(tempArr);
+
+      int step = tempArr[1] - tempArr[0];
+      boolean isArithmeticSubarray = true;
+
+      for (int k = 2; k < size; k++) {
+        if (tempArr[k] - tempArr[k - 1] != step) {
+          isArithmeticSubarray = false;
           break;
         }
       }
 
-      result.add(isArithmeticSequence);
+      result.add(isArithmeticSubarray);
     }
 
     return result;
