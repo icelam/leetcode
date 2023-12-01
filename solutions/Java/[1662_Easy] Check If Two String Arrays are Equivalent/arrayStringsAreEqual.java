@@ -3,18 +3,14 @@ class Solution {
     StringBuilder w1 = new StringBuilder();
     StringBuilder w2 = new StringBuilder();
 
-    int length = Math.max(word1.length, word2.length);
-
-    for (int i = 0; i < length; i++) {
-      if (i < word1.length) {
-        w1.append(word1[i]);
-      }
-
-      if (i < word2.length) {
-        w2.append(word2[i]);
-      }
+    for (int i = 0; i < word1.length; i++) {
+      w1.append(word1[i]);
     }
 
-    return w1.compareTo(w2) == 0;
+    for (int j = 0; j < word2.length; j++) {
+      w2.append(word2[j]);
+    }
+
+    return w1.toString().equals(w2.toString());
   }
 }
