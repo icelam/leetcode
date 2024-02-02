@@ -1,30 +1,23 @@
-function getExponent(n: number): number {
-  return Math.floor(Math.log10(n));
-}
-
-function getFirstDigit(n: number): number {
-  return Math.floor(n / Math.pow(10, getExponent(n)));
-}
-
 function sequentialDigits(low: number, high: number): number[] {
   const result: number[] = [];
 
-  for (let i = low; i < high; i = (getFirstDigit(i) + 1) * Math.pow(10, getExponent(i))) {
-    const firstDigit = getFirstDigit(i);
+  for (let i = 0; i < 10; i++) {
+    let num = 0;
 
-    if (firstDigit + getExponent(i) > 9) {
-      continue;
-    }
+    for (let j = i + 1; j < 10; j++) {
+      num *= 10;
+      num += j;
 
-    let sequence = 0;
-    for (let j = getExponent(i); j >= 0; j--) {
-      sequence += (getExponent(i) - j + firstDigit) * Math.pow(10, j);
-    }
+      if (num > high) {
+        break;
+      }
 
-    if (sequence >= low && sequence <= high) {
-      result.push(sequence);
+      if (num >= low && num <= high) {
+        result.push(num);
+      }
     }
   }
 
+  result.sort((a, b) => a - b);
   return result;
 }
