@@ -2,6 +2,12 @@
 
 I have been learning data structures and algorithms, and I have set myself a goal to finish the daily Leetcode challenge every day. This repository archives my submissions on Leetcode as a reference.
 
+<p>
+    <a href="https://leetcode.com/icelam" target="_blank">
+        <img src="https://leetcard.jacoblin.cool/icelam?theme=dark&font=Baloo%202&ext=heatmap" width="400" />
+    </a>
+</p>
+
 ## List of solutions
 
 | Title                                                                    | Difficulty |                                                                  Java                                                                  |                                                  TypeScript                                                   |                                                       MySQL                                                       |                              Bash                               |                                     Pandas                                      |
