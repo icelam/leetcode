@@ -1,58 +1,33 @@
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
-
 class Solution {
-  public ListNode reverseList(ListNode head) {
-    ListNode previous = null;
-    ListNode current = head;
-
-    while (current != null) {
-      ListNode next = current.next;
-      current.next = previous;
-      previous = current;
-      current = next;
-    }
-
-    return previous;
-  }
-
   public boolean isPalindrome(ListNode head) {
     ListNode fast = head;
     ListNode slow = head;
+    int index = 0;
+    List<Integer> values = new ArrayList<>();
+    values.add(slow.val);
 
     while (fast.next != null && fast.next.next != null) {
       fast = fast.next.next;
       slow = slow.next;
+      values.add(slow.val);
+      index++;
     }
 
-    boolean isOddLengthList = (fast.next == null);
-
-    ListNode list1 = head;
-    ListNode list2 = slow.next;
-
-    slow.next = null;
-    list1 = reverseList(list1);
-
+    boolean isOddLengthList = fast.next == null;
     if (isOddLengthList) {
-      list1 = list1.next;
+      index--;
     }
+    slow = slow.next;
 
-    while (list1 != null) {
-      if (list1.val != list2.val) {
+    while (slow != null) {
+      if (slow.val != values.get(index)) {
         return false;
       }
 
-      list1 = list1.next;
-      list2 = list2.next;
+      slow = slow.next;
+      index--;
     }
+
     return true;
   }
 }
