@@ -55,4 +55,4 @@ encode-path:
 
 # Prettify README.md
 prettify-readme:
-	npx prettier README.md --write
+	npx prettier **/*.md --write
