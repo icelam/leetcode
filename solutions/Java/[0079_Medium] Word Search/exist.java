@@ -5,10 +5,11 @@ class Solution {
     return row >= 0 && row < height && column >= 0 && column < width;
   }
 
-  private boolean backtrack(char[][] board, int height, int width, String word, int n, StringBuilder sb, int row, int column, int index) {
+  private boolean backtrack(char[][] board, int height, int width, char[] word, int n, int row, int column, int index) {
     if (
-      board[row][column] == '.'
-      || board[row][column] != word.charAt(index)
+      !isValidPosition(row, column, height, width)
+      || board[row][column] != word[index]
+      || board[row][column] == '.'
     ) {
       return false;
     }
@@ -19,27 +20,15 @@ class Solution {
 
     char c = board[row][column];
     boolean isWordExists = false;
-
     board[row][column] = '.';
-    sb.append(c);
 
     for (int[] d: directions) {
-      int newRow = row + d[0];
-      int newColumn = column + d[1];
-
-      if (!isValidPosition(newRow, newColumn, height, width)) {
-        continue;
-      }
-
-      boolean result = backtrack(board, height, width, word, n, sb, newRow, newColumn, index + 1);
-
-      if (result) {
+      if (backtrack(board, height, width, word, n, row + d[0], column + d[1], index + 1)) {
         isWordExists = true;
         break;
       }
     }
 
-    sb.deleteCharAt(sb.length() - 1);
     board[row][column] = c;
     return isWordExists;
   }
@@ -47,14 +36,11 @@ class Solution {
   public boolean exist(char[][] board, String word) {
     int height = board.length;
     int width = board[0].length;
-
-    char prefix = word.charAt(0);
+    char[] characters = word.toCharArray();
 
     for (int i  = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        boolean isWordExist = backtrack(board, height, width, word, word.length(), new StringBuilder(board[i][j]), i, j, 0);
-
-        if (isWordExist) {
+        if (backtrack(board, height, width, characters, characters.length, i, j, 0)) {
           return true;
         }
       }
