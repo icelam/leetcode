@@ -1,77 +1,45 @@
-class Node {
-  private int value;
-  private List<Node> neighbor;
-
-  public Node(int n) {
-    this.value = n;
-    this.neighbor = new ArrayList<Node>();
-  }
-
-  public void createEdge(Node neighborNode) {
-    this.neighbor.add(neighborNode);
-    neighborNode.neighbor.add(this);
-  }
-
-  public List<Node> getChildren() {
-    return this.neighbor;
-  }
-
-  public int getValue() {
-    return this.value;
-  }
-}
-
 class Solution {
+  private List<Integer>[] adjacencyList;
   private int[] result;
-  private int[] count;
+  private int[] treeSize;
 
-  public void postOrder(Node node, Node parent) {
-    int currentValue = node.getValue();
-    int parentValue = parent.getValue();
-
-    for (Node childNode: node.getChildren()) {
-      int childValue = childNode.getValue();
-
-      if (childValue != parentValue) {
-        postOrder(childNode, node);
-        count[currentValue] += count[childValue];
-        result[currentValue] += result[childValue] + count[childValue];
+  public void postOrder(int node, int parent) {
+    for (int neighbor: adjacencyList[node]) {
+      if (neighbor != parent) {
+        postOrder(neighbor, node);
+        treeSize[node] += treeSize[neighbor];
+        result[node] += result[neighbor] + treeSize[neighbor];
       }
     }
   }
 
-  public void preOrder(Node node, Node parent, int n) {
-    int currentValue = node.getValue();
-    int parentValue = parent.getValue();
-
-    for (Node childNode: node.getChildren()) {
-      int childValue = childNode.getValue();
-
-      if (childValue != parentValue) {
-        result[childValue] = result[currentValue] - count[childValue] + n - count[childValue];
-        preOrder(childNode, node, n);
+  public void preOrder(int node, int parent, int n) {
+    for (int neighbor: adjacencyList[node]) {
+      if (neighbor != parent) {
+        result[neighbor] = result[node] - treeSize[neighbor] + n - treeSize[neighbor];
+        preOrder(neighbor, node, n);
       }
     }
   }
 
   public int[] sumOfDistancesInTree(int n, int[][] edges) {
-    Node[] nodes = new Node[n];
     result = new int[n];
-    count = new int[n];
-    Arrays.fill(count, 1);
+    treeSize = new int[n];
+    adjacencyList = new ArrayList[n];
 
     for (int i = 0; i < n; i++) {
-      nodes[i] = new Node(i);
+      adjacencyList[i] = new ArrayList<Integer>();
     }
 
-    for (int i = 0; i < edges.length; i++) {
-      int node1 = edges[i][0];
-      int node2 = edges[i][1];
-      nodes[node1].createEdge(nodes[node2]);
+    for (int[] edge: edges) {
+      adjacencyList[edge[0]].add(edge[1]);
+      adjacencyList[edge[1]].add(edge[0]);
     }
 
-    postOrder(nodes[0], new Node(-1));
-    preOrder(nodes[0], new Node(-1), n);
+    Arrays.fill(treeSize, 1);
+
+    postOrder(0, -1);
+    preOrder(0, -1, n);
 
     return result;
   }
