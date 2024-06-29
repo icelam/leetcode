@@ -11,33 +11,33 @@ class Solution {
     return differenceCount == 0 || differenceCount == 2;
   }
 
-  public void dfs(Map<Integer, List<Integer>> adjencyList, boolean[] visited, int node) {
+  public void dfs(Map<Integer, List<Integer>> adjacencyList, boolean[] visited, int node) {
     visited[node] = true;
 
-    if (!adjencyList.containsKey(node)) {
+    if (!adjacencyList.containsKey(node)) {
       return;
     }
 
-    for (int neighbor : adjencyList.get(node)) {
+    for (int neighbor : adjacencyList.get(node)) {
       if (!visited[neighbor]) {
         visited[neighbor] = true;
-        dfs(adjencyList, visited, neighbor);
+        dfs(adjacencyList, visited, neighbor);
       }
     }
   }
 
   public int numSimilarGroups(String[] strs) {
     int n = strs.length;
-    Map<Integer, List<Integer>> adjencyList = new HashMap<>();
+    Map<Integer, List<Integer>> adjacencyList = new HashMap<>();
 
     for (int i = 0; i < n; i++) {
       for (int j = i + 1; j < n; j++) {
         if (isSimilar(strs[i], strs[j])) {
-          adjencyList.putIfAbsent(i, new ArrayList<>());
-          adjencyList.get(i).add(j);
+          adjacencyList.putIfAbsent(i, new ArrayList<>());
+          adjacencyList.get(i).add(j);
 
-          adjencyList.putIfAbsent(j, new ArrayList<>());
-          adjencyList.get(j).add(i);
+          adjacencyList.putIfAbsent(j, new ArrayList<>());
+          adjacencyList.get(j).add(i);
         }
       }
     }
@@ -47,7 +47,7 @@ class Solution {
 
     for (int i = 0; i < n; i++) {
       if (!visited[i]) {
-        dfs(adjencyList, visited, i);
+        dfs(adjacencyList, visited, i);
         count++;
       }
     }
