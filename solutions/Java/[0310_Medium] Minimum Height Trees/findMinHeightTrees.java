@@ -1,19 +1,19 @@
 class Solution {
-  private HashMap<Integer, HashSet<Integer>> generateAdjencyList(int n, int[][] edges) {
-    HashMap<Integer, HashSet<Integer>> adjencyList = new HashMap<>();
+  private HashMap<Integer, HashSet<Integer>> generateAdjacencyList(int n, int[][] edges) {
+    HashMap<Integer, HashSet<Integer>> adjacencyList = new HashMap<>();
 
     for (int i = 0; i < n; i++) {
-      adjencyList.put(i, new HashSet<>());
+      adjacencyList.put(i, new HashSet<>());
     }
 
     for (int[] edge: edges) {
       int node1 = edge[0];
       int node2 = edge[1];
-      adjencyList.get(node1).add(node2);
-      adjencyList.get(node2).add(node1);
+      adjacencyList.get(node1).add(node2);
+      adjacencyList.get(node2).add(node1);
     }
 
-    return adjencyList;
+    return adjacencyList;
   }
 
   public List<Integer> findMinHeightTrees(int n, int[][] edges) {
@@ -24,15 +24,15 @@ class Solution {
       return result;
     }
 
-    HashMap<Integer, HashSet<Integer>> adjencyList = generateAdjencyList(n, edges);
+    HashMap<Integer, HashSet<Integer>> adjacencyList = generateAdjacencyList(n, edges);
     Queue<Integer> queue = new LinkedList<>();
 
     /**
      * Given the fact that removing all leaves of a MST will still result in a MST,
      * we can remove leaves layer by layer which results in root of MST at the end.
      */
-    for (int node: adjencyList.keySet()) {
-      if (adjencyList.get(node).size() == 1) {
+    for (int node: adjacencyList.keySet()) {
+      if (adjacencyList.get(node).size() == 1) {
         queue.add(node);
       }
     }
@@ -45,8 +45,8 @@ class Solution {
         int currentNode = queue.remove();
         result.add(currentNode);
 
-        for (int nextNode: adjencyList.get(currentNode)) {
-          HashSet<Integer> nextNeighbors = adjencyList.get(nextNode);
+        for (int nextNode: adjacencyList.get(currentNode)) {
+          HashSet<Integer> nextNeighbors = adjacencyList.get(nextNode);
           nextNeighbors.remove(currentNode);
 
           if (nextNeighbors.size() == 1) {
