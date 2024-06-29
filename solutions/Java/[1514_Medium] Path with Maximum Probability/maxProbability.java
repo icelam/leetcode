@@ -1,16 +1,16 @@
 class Solution {
   public double maxProbability(int n, int[][] edges, double[] succProb, int start, int end) {
-    Map<Integer, List<Pair<Integer, Double>>> adjencyList = new HashMap<>();
+    Map<Integer, List<Pair<Integer, Double>>> adjacencyList = new HashMap<>();
     boolean[] visited = new boolean[n];
 
     for (int i = 0; i < edges.length; i++) {
       int[] edge = edges[i];
 
-      adjencyList.putIfAbsent(edge[0], new ArrayList<>());
-      adjencyList.get(edge[0]).add(new Pair<>(edge[1], succProb[i]));
+      adjacencyList.putIfAbsent(edge[0], new ArrayList<>());
+      adjacencyList.get(edge[0]).add(new Pair<>(edge[1], succProb[i]));
 
-      adjencyList.putIfAbsent(edge[1], new ArrayList<>());
-      adjencyList.get(edge[1]).add(new Pair<>(edge[0], succProb[i]));
+      adjacencyList.putIfAbsent(edge[1], new ArrayList<>());
+      adjacencyList.get(edge[1]).add(new Pair<>(edge[0], succProb[i]));
     }
 
     PriorityQueue<Pair<Integer, Double>> heap = new PriorityQueue<>(
@@ -41,11 +41,11 @@ class Solution {
         return currentProbablity;
       }
 
-      if (!adjencyList.containsKey(currentNode)) {
+      if (!adjacencyList.containsKey(currentNode)) {
         continue;
       }
 
-      for (Pair<Integer, Double> nextPair: adjencyList.get(currentNode)) {
+      for (Pair<Integer, Double> nextPair: adjacencyList.get(currentNode)) {
         int nextNode = nextPair.getKey();
         double nextProbablity = nextPair.getValue();
 
