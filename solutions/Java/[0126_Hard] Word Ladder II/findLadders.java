@@ -17,14 +17,14 @@ class Solution {
     return differenceCount == 1;
   }
 
-  private HashMap<String, HashSet<String>> generateAdjencyList(String beginWord, List<String> wordList) {
-    HashMap<String, HashSet<String>> adjencyList = new HashMap<>();
+  private HashMap<String, HashSet<String>> generateAdjacencyList(String beginWord, List<String> wordList) {
+    HashMap<String, HashSet<String>> adjacencyList = new HashMap<>();
     HashSet<String> uniqueWordList = new HashSet<>(wordList);
     uniqueWordList.add(beginWord);
 
     for (String word: uniqueWordList) {
       HashSet<String> neighbour = new HashSet<>();
-      adjencyList.put(word, neighbour);
+      adjacencyList.put(word, neighbour);
 
       for (String candidate: uniqueWordList) {
         if (isOneCharDifferernt(word, candidate)) {
@@ -33,7 +33,7 @@ class Solution {
       }
     }
 
-    return adjencyList;
+    return adjacencyList;
   }
 
   public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
@@ -43,7 +43,7 @@ class Solution {
       return result;
     }
 
-    HashMap<String, HashSet<String>> adjencyList = generateAdjencyList(beginWord, wordList);
+    HashMap<String, HashSet<String>> adjacencyList = generateAdjacencyList(beginWord, wordList);
 
     HashSet<String> visited = new HashSet<>();
     visited.add(beginWord);
@@ -73,7 +73,7 @@ class Solution {
           continue;
         }
 
-        for (String newWord: adjencyList.get(previousWord)) {
+        for (String newWord: adjacencyList.get(previousWord)) {
           if (previousWord.length() != newWord.length()) {
             continue;
           }
