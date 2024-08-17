@@ -1,0 +1,10 @@
+{
+  "remoteEnv": {
+    "TZ": "Asia/Hong_Kong"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["EditorConfig.EditorConfig"]
+    }
+  }
+}
