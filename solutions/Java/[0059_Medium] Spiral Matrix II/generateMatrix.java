@@ -1,6 +1,6 @@
 class Solution {
   public int[][] generateMatrix(int n) {
-     int[][] result = new int[n][n];
+    int[][] result = new int[n][n];
 
     // Boundary of top, right, bottom, left
     int[] boundaries = {0, n - 1, n - 1,  0};
