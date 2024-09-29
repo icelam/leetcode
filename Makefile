@@ -16,6 +16,7 @@ download-checkstyle:
 # Lint Java
 lint-java:
 	$(if $(strip $(ID)), $(eval PATH_TO_LINT=$(shell find ${JAVA_SOURCE_DIRECTORY} -name *${ID}*)), $(eval PATH_TO_LINT=${JAVA_SOURCE_DIRECTORY}))
+	$(eval PATH_TO_LINT=$(subst `,\`,$(PATH_TO_LINT)))
 	java -jar ${CHECKSTYLE_JAR_LOCATION} -c ${JAVA_SOURCE_DIRECTORY}/checkstyle.xml "${PATH_TO_LINT}"
 
 # Lint TypeScript
@@ -25,6 +26,7 @@ lint-ts:
 # Generate entry for use in README
 new-readme-entry:
 	$(if $(strip $(ID)), $(eval FILE_PATH=$(shell find ${JAVA_SOURCE_DIRECTORY} ${TYPESCRIPT_SOURCE_DIRECTORY} ${MYSQL_SOURCE_DIRECTORY} ${BASH_SOURCE_DIRECTORY} ${PANDAS_SOURCE_DIRECTORY} -name *${ID}* | tr '\n' ',')))
+	$(eval FILE_PATH=$(subst `,\`,$(FILE_PATH)))
 	@python3 -c 'import urllib.parse, subprocess; \
 	raw_input=input(); \
 	raw_input=raw_input.split(","); \
@@ -49,6 +51,7 @@ new-readme-entry:
 # Generate entry for use in README
 new-readme-entry-on-codespace:
 	$(if $(strip $(ID)), $(eval FILE_PATH=$(shell find ${JAVA_SOURCE_DIRECTORY} ${TYPESCRIPT_SOURCE_DIRECTORY} ${MYSQL_SOURCE_DIRECTORY} ${BASH_SOURCE_DIRECTORY} ${PANDAS_SOURCE_DIRECTORY} -name *${ID}* | tr '\n' ',')))
+	$(eval FILE_PATH=$(subst `,\`,$(FILE_PATH)))
 	@python3 -c 'import urllib.parse, subprocess; \
 	raw_input="${FILE_PATH}"; \
 	raw_input=raw_input.split(","); \
