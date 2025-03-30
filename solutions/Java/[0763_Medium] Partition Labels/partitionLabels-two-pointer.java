@@ -7,7 +7,6 @@ class Solution {
     }
 
     List<Integer> result = new ArrayList<>();
-    boolean readyToSplit = true;
 
     int start = 0;
     int end = 0;
